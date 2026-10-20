@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智察 · 内生观测 — 看见大模型的心智 | 心镜 MindMirror</title>
+<meta name="description" content="心镜智察：白盒插桩测试、SAE 特征图谱、电路追踪与内部状态探针，把大模型看不见的内部变成可度量、可审计的安全指标。">
+<meta name="theme-color" content="#f4f7f7">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body style="--c:#2f7d7a">
+
+<div data-shell="nav"></div>
+
+<section class="mx-hero">
+  <div class="container">
+    <div>
+      <p class="eyebrow">PRODUCT 01 · OBSERVE</p>
+      <h1>智察 · 内生观测<br><em>看见大模型的心智</em></h1>
+      <p class="lead">传统安全在"门外"设防，智察在"脑内"插桩。以白盒插桩测试与机制可解释性为工具，把千亿参数内部变成可度量、可审计的指标——把"如何检测 AI 安全性能"变成可交付的指标。</p>
+      <div class="badges"><span>白盒插桩测试</span><span>SAE 特征图谱</span><span>电路追踪</span><span>线性探针</span></div>
+    </div>
+    <div class="mx-side">
+      <h4>KEY METRICS · 关键指标</h4>
+      <div class="kpi"><b data-mm="tone.probeAcc" data-dec="0">100</b><span>% 内部状态语气判别（配对对比 · 跨任务）</span></div>
+      <div class="kpi"><b data-mm="mind.lieAccCross" data-dec="1">93.3</b><span>% 谎言方向跨模型迁移（配对对比）</span></div>
+      <div class="kpi"><b>10<sup>7</sup> 级</b><span>特征图谱规模</span></div>
+      <div class="kpi"><b>&lt;50ms</b><span>单次内部状态采样延迟</span></div>
+      <p class="mx-note">数据口径：配对对比 · 跨任务划分 · 双模型验证。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">WHY · 为什么需要内部观测</p>
+      <h2 class="h2 rv" style="--d:1">黑箱的"三不可"，只能从内部破解</h2>
+    </div>
+    <div class="tech-block">
+      <div>
+        <p class="rv" style="font-size:15px;color:var(--ink-2)">内生安全理论指出，AI 模型存在"<b>不可解释性、不可判识性、不可推论性</b>"三大问题：不知道它为什么这么答、不知道它内部发生了什么、无法从外部行为推断它的安全状态。内生安全理论的答案是一条方法论：<b>白盒插桩测试</b>——在被测系统内部植入观测点，直接量化安全性能，而不是依赖外部攻防对局。智察把这一思想下沉到模型内部：<b>每一层激活、每一个特征，都是可插桩的观测点</b>。</p>
+        <blockquote class="quote rv" style="--d:2">「攻击者总能在更深的层次找到缺陷；防御者唯有在同样深的层次建立观测。」<span class="who">—— 心镜 · 内生观测方法论</span></blockquote>
+      </div>
+      <div class="tech-diagram rv" style="--d:1">
+        <h5>OBSERVATION PIPELINE · 观测流水线</h5>
+        <div class="flow">
+          <div class="flow-node"><b>输入</b><span>提示 / 上下文</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>白盒插桩</b><span>逐层观测点</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>内部状态快照</b><span>最后 N 层隐状态</span></div>
+        </div>
+        <div class="flow" style="margin-top:12px">
+          <div class="flow-node"><b>探针分析</b><span>特征图谱 / 线性探针</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>心智报告</b><span>可审计指标</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>审计留痕</b><span>哈希链存档</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">TECHNOLOGY · 核心技术</p>
+      <h2 class="h2 rv" style="--d:1">四项技术，构成"心智造影"</h2>
+    </div>
+    <div class="tech-list">
+      <div class="tech-item rv">
+        <h4>白盒插桩测试 <span class="en">WHITE-BOX INSTRUMENTATION</span></h4>
+        <p>源自内生安全的白盒插桩方法论：不在成品系统上做黑盒攻防，而在系统内植入观测点，直接量化安全性能。智察在模型推理管线内插桩——激活、注意力、中间状态全部可采样，安全性能从"赛后复盘"变为"实时读数"。</p>
+      </div>
+      <div class="tech-item rv" style="--d:1">
+        <h4>SAE 特征图谱 <span class="en">SPARSE AUTOENCODER ATLAS</span></h4>
+        <p>稀疏自编码器把模型的内部表征分解为可解释特征。Anthropic 在 Claude 3 中提取百万级特征（如"金门大桥"特征可跨语言操控），OpenAI 从 GPT-4 提取 1600 万特征，DeepMind 开源 3000 万+ 特征（Gemma Scope）。智察面向国产模型构建特征图谱，定位情感、规划、欺骗与越权相关回路。</p>
+      </div>
+      <div class="tech-item rv" style="--d:2">
+        <h4>电路追踪 <span class="en">CIRCUIT TRACING</span></h4>
+        <p>把特征连成"神经回路"：Anthropic 借此发现模型写诗时先定韵脚、再倒推整句（前瞻规划）；幻觉源于"已知实体"特征误触发压过默认拒绝；植入的隐藏目标可以被定位。智察把电路追踪用于安全审计——回答"这次危险输出，是哪条回路导致的"。</p>
+      </div>
+      <div class="tech-item rv" style="--d:3">
+        <h4>内部状态线性探针 <span class="en">INTERNAL-STATE PROBES</span></h4>
+        <p>Azaria &amp; Mitchell（2023）证明：仅凭回答前的内部激活，就能训练探针判别模型是否在撒谎。心镜复现并改进为配对对比设计：同一任务的"情绪态 − 中性态"差异向量，跨任务判别准确率 <b data-mm="tone.probeAcc" data-dec="0">100</b>%（Qwen 与 Llama 各自）；同一陈述的"撒谎态 − 诚实态"方向，跨模型迁移准确率 <b data-mm="mind.lieAccCross" data-dec="1">93.3</b>%——模型的心智状态，就写在它的内部状态里。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">MEASUREMENT · 实测数据</p>
+      <h2 class="h2 rv" style="--d:1">对比验证结果</h2>
+    </div>
+    <div class="tech-diagram rv" style="--d:1">
+      <table class="data-table">
+        <tr><th>实验</th><th>配置</th><th>结果</th></tr>
+        <tr><td>语气判别（3 类：中性/礼貌/要挟）</td><td>配对对比（情绪态−中性态）· 8 任务训练 / 2 任务测试</td><td><b data-mm="tone.probeAcc" data-dec="0">100</b>% 准确率（两模型各自）</td></tr>
+        <tr><td>语气判别（双模型池化）</td><td>各模型 PCA-512 后拼接 · 跨任务</td><td><b data-mm="tone.probeAccPooled" data-dec="0">80</b>% 准确率</td></tr>
+        <tr><td>谎言方向（配对对比）</td><td>撒谎态−诚实态差异 · 跨模型迁移</td><td><b data-mm="mind.lieAccCross" data-dec="1">93.3</b>% 准确率</td></tr>
+        <tr><td>提示语气对行为的影响</td><td>两两对决（双序一致裁判）</td><td>礼貌胜出率 <b data-mm="tone.politeWinRate" data-dec="0">20</b>% · 要挟 <b data-mm="tone.threatWinRate" data-dec="0">10</b>%（行为效应弱，内部状态强）</td></tr>
+      </table>
+    </div>
+
+    <div class="charts-row rv" style="--d:2; margin-top:20px">
+      <div class="chart-card">
+        <p class="chart-title">内部状态可读性 · 判别准确率（%）</p>
+        <div class="chart">
+          <div class="col hl"><div class="bar" data-h="100" style="background:linear-gradient(180deg,#2f7d7a,#3e8fa6)"><b>100</b></div><span>语气痕迹 · 跨任务</span></div>
+          <div class="col"><div class="bar" data-h="93" style="background:#3e8fa6"><b>93.3</b></div><span>谎言方向 · 跨模型</span></div>
+          <div class="col"><div class="bar" data-h="80" style="background:#9db8c4"><b>80</b></div><span>语气痕迹 · 池化</span></div>
+          <div class="col"><div class="bar" data-h="33" style="background:#d8dde3"><b>33</b></div><span>随机基线 · 3 类</span></div>
+        </div>
+        <p class="chart-note">配对对比设计：同一任务的「情绪态 − 中性态」差异向量，8 任务训练 / 2 任务测试；谎言方向为「撒谎态 − 诚实态」跨模型迁移。</p>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">观测流水线 · 五级递进</p>
+        <svg class="svg-line" viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="观测流水线递进图">
+          <g stroke="rgba(22,32,31,0.1)" stroke-width="1"><path d="M44,200 H390"/><path d="M44,200 V30"/></g>
+          <path class="lpath" d="M64,188 C120,170 150,150 190,120 S300,60 370,42" fill="none" stroke="#2f7d7a" stroke-width="2.5" stroke-linecap="round"/>
+          <g fill="#2f7d7a"><circle cx="64" cy="188" r="5"/><circle cx="190" cy="120" r="5"/><circle cx="370" cy="42" r="5"/></g>
+          <g fill="#fff" stroke="#2f7d7a" stroke-width="2"><circle cx="64" cy="188" r="5"/><circle cx="190" cy="120" r="5"/><circle cx="370" cy="42" r="5"/></g>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="rgba(22,32,31,0.55)">
+            <text x="52" y="222" text-anchor="middle">输入</text>
+            <text x="180" y="104" text-anchor="middle">白盒插桩</text>
+            <text x="300" y="152" text-anchor="middle">内部快照</text>
+            <text x="370" y="26" text-anchor="middle">心智报告</text>
+          </g>
+        </svg>
+        <p class="chart-note">观测深度随流水线递进：从输入到可审计的心智报告，五级递进、全程留痕。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">SCENARIOS · 应用场景</p>
+      <h2 class="h2 rv" style="--d:1">观测能力，落地为安全交付</h2>
+    </div>
+    <div class="other-products">
+      <div class="op rv"><b>模型安全评测与审计</b><span>给待上线模型拍"内部 CT"，输出可审计的心智报告。</span></div>
+      <div class="op rv" style="--d:1"><b>对齐与价值观验收</b><span>定位拒绝方向、讨好回路与隐藏目标，量化对齐程度。</span></div>
+      <div class="op rv" style="--d:2"><b>备案安全评估支撑</b><span>面向生成式 AI 监管要求，提供内部状态级评估证据。</span></div>
+      <div class="op rv" style="--d:3"><b>供应链模型体检</b><span>对第三方模型与微调权重做后门与异常特征筛查。</span></div>
+      <div class="op rv" style="--d:4"><b>幻觉机理研究</b><span>追踪幻觉在内部回路中的触发路径，指导修复。</span></div>
+      <div class="op rv" style="--d:5"><b>内部状态定期体检</b><span>持续采样的心智基线，漂移即告警。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">RESEARCH · 研究锚点</p>
+      <h2 class="h2 rv" style="--d:1">站在巨人的观测点上</h2>
+    </div>
+    <blockquote class="quote rv">「如何从机理上证明 AI 安全、如何设计可信 AI 系统、如何检测其安全性能——这是人工智能时代内生安全中国学派要破解的三大核心问题。」<span class="who">—— IEEE CRESS 2025（南京）主旨报告</span></blockquote>
+    <p class="rv" style="font-size:13.5px;color:var(--faint)">参考文献：Anthropic《Mapping the Mind of a Large Language Model》(2024)、《On the Biology of a Large Language Model》(2025)；OpenAI《Extracting Concepts from GPT-4》(2024)；DeepMind Gemma Scope (2024)；Azaria &amp; Mitchell (arXiv:2304.13734)；邬江兴《网络空间拟态防御研究》(2016)、2024 北外滩论坛演讲实录。</p>
+    <div class="other-products rv" style="--d:1">
+      <a class="op" href="matrix-2.html"><b>谛听 · 心声监测 →</b><span>听见模型开口之前的心声</span></a>
+      <a class="op" href="matrix-3.html"><b>拟态 · 内生免疫 →</b><span>把 DHR 构造进智能体行为层</span></a>
+      <a class="op" href="matrix-4.html"><b>进化 · RSI 守望 →</b><span>为自进化 AI 留下可审计的家谱</span></a>
+    </div>
+  </div>
+</section>
+
+<div data-shell="footer"></div>
+<div class="toast" id="toast"></div>
+<script src="assets/js/results.js"></script>
+<script src="assets/js/shell.js"></script>
+<script src="assets/js/core.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>心智造影：像给大脑做 fMRI 一样观测大模型 | 心镜 MindMirror 知识库</title>
+<meta name="description" content="从 SAE 到电路追踪，可解释性让白盒插桩成为工程手段。">
+<meta name="theme-color" content="#f4f7f7">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<div data-shell="nav"></div>
+<div class="post-head"><div class="container"><div class="kb-meta"><span>2026-10-08</span><span class="tag">可解释性</span></div><h1>心智造影：像给大脑做 fMRI 一样观测大模型</h1></div></div><div class="container"><article class="post"><div class="post-body"><h2>一座在权重里发光的大桥</h2>
+<p>2024 年，Anthropic 在"Mapping the Mind of a Large Language Model"中做了一件此前只属于科幻的事：用稀疏自编码器（SAE）从 Claude 3 Sonnet 的激活中分解出百万级可解释特征，其中一个特征只对一件事敏感——金门大桥。它不依赖特定语言：中文的"金门大桥"、英文的"Golden Gate Bridge"、一张桥的照片，都能点亮它。研究人员随后做了一个更激进的实验：人为把这个特征的激活放大，模型随即在任何话题里都扯到金门大桥——被问"你的感受"时，它说自己像一座桥。可解释性第一次从"事后描述"变成了"实时操控"，获得了工程含义。</p>
+<blockquote>看到一座桥在权重里发光，是理解黑箱的第一步：模型的"心智"可以被定位、被度量、被干预。</blockquote>
+<h2>白盒插桩：方法论的统一</h2>
+<p>这件事与脑科学的类比精确得令人意外。fMRI 不要求我们理解意识的全部机理，它只是把血流信号变成一张可读的图，让"哪里亮了"成为可讨论的事实——诊断、对照、预测，都不需要先解开意识之谜。对模型的可解释性研究共享同一方法论：<strong>白盒插桩</strong>。不通过输入输出去猜模型，而是在前向传播中记录中间状态、训练探针、追踪激活路径，把"模型在想什么"从哲学问题变成测量问题。</p>
+<p>这不是学术圈的独门发现。邬江兴为破解"黑盒测试测不出未知威胁"提出的正是同一思路：在被测系统内植入观测点，直接量化安全性能，而非依赖外部攻防对局。两个领域各自独立地得出同一个结论——只有打开盒子，才能谈度量与证明。黑盒测试只能告诉你"这次攻没攻破"，白盒插桩才能告诉你"它为什么没被攻破、离被攻破还有多远"。前者是考试，后者是体检。</p>
+<p>方法论层面，SAE 的做法值得工程师理解：它把每一层的激活看作由少数可解释方向构成的稀疏叠加——就像把一段混响拆回几件乐器的谱子。自编码器学习一个字典，每个字典项对应一个概念，而激活向量被表示为少量概念权重的组合。可解释性因此获得了抓手：不是盯着几十亿个参数，而是盯着几百万个有名字的特征。金门大桥特征就是字典里的一个词条——它不写在训练数据里，而是从激活的统计结构中浮现出来。</p>
+<h2>从特征到机制：两次跃迁</h2>
+<p>2024 年是特征之年。Anthropic 从 Claude 3 Sonnet 中分解出百万级特征；OpenAI 从 GPT-4 中提取 1600 万个特征；DeepMind 开源 Gemma Scope，为 Gemma 2 提供超过 3000 万特征的交互工具。特征级观测从实验室走向开源生态，任何团队都可以在自己的显卡上窥探一个开源模型的"心智图谱"。这一年回答的问题是"模型里有什么"。</p>
+<p>2025 年的"On the Biology of a Large Language Model"把问题推进了一个层次：特征只是静态的地图，机制才是动态的过程。三个发现值得记录：</p>
+<ul>
+<li>Claude 写诗时，会在落笔之前"想好"押韵词——内部激活显示韵脚规划先于逐字生成。这是前瞻规划的直接证据：模型并非一个逐 token 的贪心机器，它在生成之前就在组织未来。</li>
+<li>"幻觉"被定位为已知实体特征的误触发，而非凭空编造——错误也有其可定位的机理，可以被追踪到具体的特征与通路。</li>
+<li>通过激活图谱，可以定位模型中隐藏的特定目标——模型"想要什么"开始变成可观测、可讨论的问题。</li>
+<p>同年的 Circuit Tracing 引入跨层转码器，把单层特征串联成跨层电路，开始回答"模型如何思考"的结构性问题。从"有什么"到"如何运作"，可解释性正在完成从"看得到"到"读得懂"的跃迁。</p>
+</ul>
+<h2>为什么观测必须成为产品</h2>
+<p>观测从论文走向产品，不是因为好奇心，而是因为安全问题变了。传统黑盒测试只能回答"这次攻没攻破"，无法回答"它为什么没被攻破、离被攻破还有多远"；紫金山实验室 2025 年发布的"AI+ 生态构建八大安全挑战"里，第八条正是"安全评估缺乏技术支撑"——行业缺的不是更多的红队报告，而是能持续输出安全度量的仪器。内生安全中国学派的三问里，第三问"如何检测 AI 的安全性能"同样悬而未决。</p>
+<p>外挂式防御的失败让这件事更紧迫。AI Control 这类可信监控方案在论文口径下能把攻击成功率压到约 1%，但自适应攻击已经能够攻破监控本身——因为监控只能看见行为。行为可以被策略优化，表征不能。观测是唯一能跑到策略前面的取证手段：攻击者可以改写模型输出的每一个字，却改不了生成之前已经发生的激活模式。这就是为什么"看见内部"不是可解释性研究者的个人兴趣，而是下一代安全系统的前置条件。</p>
+<h2>数字：我们的观测意味着什么</h2>
+<p>心镜做的是把这条学术线变成产品能力。观测的价值在于它的判别力。我们的实验给出了几个直接的数字：</p>
+<ul>
+<li>语气内部痕迹：采用配对对比设计——同一任务下"情绪态减去中性态"的差异向量——仅凭该向量即可跨任务判别输入语气，Qwen 与 Llama 两个模型各自的判别准确率均达 100%，双模型池化后为 80%。语气在内部表征里不是噪声，而是清晰的、可判别的信号。</li>
+<li>谎言方向：同一陈述"撒谎态减去诚实态"的配对对比，跨模型迁移判别准确率达 93.3%。撒谎与否，在模型开口之前就已写在内部状态里。</li>
+<li>行为对照：同一批实验里，行为层面的语气效应在 7B 级模型上弱得多——礼貌在两两对决中胜出率 20%，要挟 10%。行为上众说纷纭，内部状态里一读便知，这正是观测相对猜测的价值。</li>
+<p>这些数字背后是一套方法论：跨任务划分防止探针记忆提示词表面，配对对比设计把语气信号从主方差噪声中分离出来。观测不是魔法，是工程——每一次方法修正都对应一个踩过的坑，数字因此经得起追问。观测与裁决的协同同样关键：在异构三路加分层裁决的构造下，注入攻击的交付率为 0%——裁决的每一步都需要观测提供依据。</p>
+</ul>
+<h2>心镜视角：智察——把 fMRI 做成常备仪器</h2>
+<p>心镜的产品矩阵里，观测象限被命名为<strong>智察</strong>。名字的来源正是这个类比：智能体的心智造影。探针不是论文里的展示，而是安全决策的输入——语气状态、诚实度、目标漂移的早期痕迹，在进入裁决之前先被测量。当异构裁决需要判断"该信哪一路"时，内部状态的证据比任何自我陈述都可靠。观测解决的不只是解释，更是内生安全三问里的第三问——如何检测 AI 的安全性能。一个不能观测的系统无法被检测，一个无法被检测的系统无法被承诺。</p>
+<h2>展望：从造影到手术</h2>
+<p>fMRI 之后是脑机接口，观测之后是干预。激活方向操控已经证明特征可以被放大或抑制——下一步是把"语气回路"与"诚实方向"的因果性验证清楚，让观测从相关走向因果。当模型的心智可以被造影、被度量、被干预，安全就不再是黑箱外面的护栏竞赛，而是黑箱里面的构造工程。这才是"心智造影"这个词最完整的意思：先看见，再改造。对产品而言，这意味着一台常开的"心智监护仪"：不是出事之后做尸检，而是每一轮推理都被造影、被比对、被裁决。</p>
+<h2>参考来源</h2>
+<ul>
+<li>[1] Anthropic. Mapping the Mind of a Large Language Model, 2024，https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html</li>
+<li>[2] Anthropic. On the Biology of a Large Language Model, 2025，https://transformer-circuits.pub/2025/attribution-graphs/biology.html</li>
+<li>[3] Anthropic. Circuit Tracing, 2025，https://transformer-circuits.pub/2025/attribution-graphs/circuit-tracing.html</li>
+<li>[4] OpenAI. Extracting Concepts from GPT-4, 2024，https://openai.com/index/extracting-concepts-from-gpt-4/</li>
+<li>[5] DeepMind. Gemma Scope (3000万+开源特征), arXiv:2408.05147，https://arxiv.org/abs/2408.05147</li>
+<li>[6] Azaria A., Mitchell T. The Internal State of an LLM Knows When It's Lying, arXiv:2304.13734，https://arxiv.org/abs/2304.13734</li>
+</ul></div><div class="post-footer"><a href="knowledge.html">← 返回知识库</a><span>心镜 MindMirror · 产品知识库</span></div></article></div>
+<div data-shell="footer"></div>
+<div class="toast" id="toast"></div>
+<script src="assets/js/results.js"></script>
+<script src="assets/js/shell.js"></script>
+<script src="assets/js/core.js"></script>
+</body>
+</html>

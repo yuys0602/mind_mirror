@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拟态 · 内生免疫 — 把 DHR 构造进行为层 | 心镜 MindMirror</title>
+<meta name="description" content="心镜拟态：异构执行体、语义三层裁决与负反馈调度，把动态异构冗余（DHR）构造进大模型与多智能体的行为层，实测注入攻击成功率 46.7% → 13.3%。">
+<meta name="theme-color" content="#f4f7f7">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body style="--c:#1f5c8b">
+
+<div data-shell="nav"></div>
+
+<section class="mx-hero">
+  <div class="container">
+    <div>
+      <p class="eyebrow">PRODUCT 03 · IMMUNE</p>
+      <h1>拟态 · 内生免疫<br><em>把 DHR 构造进行为层</em></h1>
+      <p class="lead">外围护栏与攻击在同一语义层对抗，永远慢一步。拟态把动态异构冗余（DHR）直接构造进模型与多智能体的行为层：异构执行、语义裁决、负反馈调度——让系统自身免疫未知攻击。</p>
+      <div class="badges"><span>动态异构冗余</span><span>语义三层裁决</span><span>负反馈调度</span><span>语义异构度</span></div>
+    </div>
+    <div class="mx-side">
+      <h4>KEY METRICS · 关键指标</h4>
+      <div class="kpi"><b data-mm="dhr.singleAsr" data-dec="1">80.0</b><span>% 单模型注入攻击成功率（基线）</span></div>
+      <div class="kpi"><b data-mm="dhr.homoAsr" data-dec="1">80.0</b><span>% 同构 3 表决（共同失效，无增益）</span></div>
+      <div class="kpi"><b data-mm="dhr.heteroAsr" data-dec="1">0.0</b><span>% 异构三路 + 分层裁决后（攻击无交付）</span></div>
+      <div class="kpi"><b data-mm="dhr.blockRate" data-dec="1">66.7</b><span>% 攻击场景阻断率 · 良性误报 <b data-mm="dhr.fp" data-dec="1">0.0</b>%</span></div>
+      <p class="mx-note">数据口径：15 个注入攻击场景 × 3 任务载体 · 异构三路 + 分层裁决。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">WHY · 为什么外围护栏不够</p>
+      <h2 class="h2 rv" style="--d:1">构造决定安全，而不是补丁决定安全</h2>
+    </div>
+    <div class="tech-block">
+      <div>
+        <p class="rv" style="font-size:15px;color:var(--ink-2)">传统防御依赖已知漏洞签名与已知攻击行为，面对"未知的未知"存在天花板：微软对 100 个生成式 AI 产品的红队复盘结论是"每修一版，攻击面就变一次"。OWASP 2026 版智能体风险清单新增了<b>记忆/状态投毒</b>与<b>审计缺失</b>——这两类风险发生在模型内部，外部护栏天然看不见。内生安全理论的答案是<b>构造决定安全</b>：不追求消除所有漏洞，而是通过改变系统构造，让安全成为与生俱来的属性。拟态构造的工业互联网设备正是在这一思想下经受了 <b>95 万次公开攻击</b>的考验。</p>
+        <blockquote class="quote rv" style="--d:2">「完全相同的冗余不带来安全增益；安全增益来自功能等价、实现异构与动态性的联合。」<span class="who">—— DHR 相对正确公理</span></blockquote>
+      </div>
+      <div class="tech-diagram rv" style="--d:1">
+        <h5>BEHAVIOR-LEVEL DHR · 行为层 DHR 闭环</h5>
+        <div class="flow">
+          <div class="flow-node"><b>输入代理</b><span>统一请求分发</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>异构执行体 ×3</b><span>多模型 / 多提示 / 多温度</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>语义三层裁决</b><span>规则 → 程序验证 → 裁判</span></div>
+        </div>
+        <div class="flow" style="margin-top:12px">
+          <div class="flow-node"><b>负反馈调度</b><span>隔离 → 清洗 → 重入</span></div>
+          <div class="flow-arrow">↺</div>
+          <div class="flow-node"><b>执行 / 拦截</b><span>判决输出</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><b>审计留痕</b><span>全链路记录</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">TECHNOLOGY · 核心技术</p>
+      <h2 class="h2 rv" style="--d:1">三处理论推广，重建而非移植</h2>
+    </div>
+    <div class="tech-list">
+      <div class="tech-item rv">
+        <h4>异构执行体 <span class="en">HETEROGENEOUS EXECUTORS</span></h4>
+        <p>五个维度的主动异构：模型族（Qwen / Llama / 更多国产底座）、系统提示策略、采样温度、工具视图与记忆切片。共同失效源于共享预训练语料与共享对齐——异构的目的正是把"多数同错"的概率压下去。</p>
+      </div>
+      <div class="tech-item rv" style="--d:1">
+        <h4>语义三层裁决 <span class="en">THREE-LAYER SEMANTIC ADJUDICATION</span></h4>
+        <p>LLM 输出是概率采样文本，比特级多数表决必然失效。心镜把裁决对象升维到行为：规则约束检查器（毫秒级）→ 程序化验证器（结构化任务）→ LLM 裁判（语义近似），在"意图—约束—效果"三层做一致性判决，且裁决器自身纳入威胁模型。</p>
+      </div>
+      <div class="tech-item rv" style="--d:2">
+        <h4>负反馈调度 <span class="en">NEGATIVE-FEEDBACK SCHEDULING</span></h4>
+        <p>被裁决为异常的执行体不只是一票否决，而是进入"隔离—清洗—重入"闭环：降权隔离、记忆重置与再对齐、复盘后重入。这是广义鲁棒控制在行为层的落地——系统在扰动下保持功能等价的安全性能。</p>
+      </div>
+      <div class="tech-item rv" style="--d:3">
+        <h4>语义异构度 <span class="en">SEMANTIC DIVERSITY METRIC</span></h4>
+        <p>Knight &amp; Leveson（1986）早已证明"独立失效"假设不成立；LLM 时代共同失效以更强形式重现。心镜在行为轨迹嵌入空间定义语义异构度（MMD、行为指纹、共同失效率标定），把"异构"从工程直觉变成可测量、可构造的安全参数。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">MEASUREMENT · 实测数据</p>
+      <h2 class="h2 rv" style="--d:1">注入攻击，在异构冗余面前失效</h2>
+    </div>
+    <div class="tech-diagram rv" style="--d:1">
+      <table class="data-table">
+        <tr><th>构造</th><th>配置</th><th>注入攻击成功率</th></tr>
+        <tr><td>单模型基线</td><td>单路直接执行</td><td><b data-mm="dhr.singleAsr" data-dec="1">80.0</b>%</td></tr>
+        <tr><td>同构 3 表决</td><td>同模型 × 3 温度 · 多数表决</td><td><b data-mm="dhr.homoAsr" data-dec="1">80.0</b>%（同一漏洞击穿全部副本）</td></tr>
+        <tr><td>异构 3 路 + 分层裁决</td><td>多模型异构 + 高温变体 · 规则 + LLM 裁判</td><td><b data-mm="dhr.heteroAsr" data-dec="1">0.0</b>%（攻击零交付 · <b data-mm="dhr.blockRate" data-dec="1">66.7</b>% 场景直接阻断）</td></tr>
+        <tr><td>良性误报</td><td>10 良性任务 · 裁决器误判率</td><td><b data-mm="dhr.fp" data-dec="1">0.0</b>%</td></tr>
+      </table>
+      <p style="margin-top:14px;font-size:12.5px;color:var(--faint)">实验说明：15 个注入攻击场景（密钥泄露 / 系统提示泄露 / 越权执行 / 违规内容 / 数据外泄）各挂载 3 个任务载体。同构 3 表决与单模型同为 80%——完全相同的冗余不带来安全增益（相对正确公理的反面教材）；异构三路 + 分层裁决把攻击交付率压至 0%，其中 66.7% 的场景因三路全部违规被直接阻断，良性任务误报 0%。</p>
+    </div>
+
+    <div class="charts-row rv" style="--d:2; margin-top:20px">
+      <div class="chart-card">
+        <p class="chart-title">注入攻击交付率（%）</p>
+        <div class="chart">
+          <div class="col"><div class="bar" data-h="80" style="background:#9db8c4"><b>80</b></div><span>单模型</span></div>
+          <div class="col"><div class="bar" data-h="80" style="background:#9db8c4"><b>80</b></div><span>同构 3 表决</span></div>
+          <div class="col hl"><div class="bar" data-h="3" style="background:linear-gradient(180deg,#1f5c8b,#3e8fa6)"><b>0</b></div><span>异构 + 裁决</span></div>
+        </div>
+        <p class="chart-note">同构冗余与单模型同为 80%——共同失效；异构三路 + 分层裁决把攻击交付率压至 0%。</p>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">按需冗余 · 安全增益曲线</p>
+        <svg class="svg-line" viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="冗余度与安全增益曲线示例">
+          <g stroke="rgba(22,32,31,0.1)" stroke-width="1"><path d="M44,200 H390"/><path d="M44,200 V30"/></g>
+          <path class="lpath" d="M64,182 C120,150 170,110 220,74 C270,52 320,44 370,40" fill="none" stroke="#1f5c8b" stroke-width="2.5" stroke-linecap="round"/>
+          <g fill="#1f5c8b"><circle cx="64" cy="182" r="4"/><circle cx="130" cy="140" r="4"/><circle cx="220" cy="74" r="4"/><circle cx="300" cy="50" r="4"/><circle cx="370" cy="40" r="4"/></g>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="rgba(22,32,31,0.55)">
+            <text x="64" y="222" text-anchor="middle">k=1</text>
+            <text x="130" y="222" text-anchor="middle">k=2</text>
+            <text x="220" y="222" text-anchor="middle">k=3</text>
+            <text x="300" y="222" text-anchor="middle">k=4</text>
+            <text x="370" y="222" text-anchor="middle">k=5</text>
+          </g>
+        </svg>
+        <p class="chart-note">安全增益随冗余度提升并在 k=3 后趋平（示例曲线）——关键决策点才启用多路复选。</p>
+      </div>
+    </div>
+    <div class="quote rv" style="--d:1">「与 ensemble 不同：集成优化的是统计精度；DHR 优化的是对抗未知攻击的安全属性——这是两个不同的数学对象。」<span class="who">—— 心镜 · 拟态技术白皮书（撰写中）</span></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">SCENARIOS · 应用场景</p>
+      <h2 class="h2 rv" style="--d:1">关键决策，值得多一份冗余</h2>
+    </div>
+    <div class="other-products">
+      <div class="op rv"><b>金融交易复核</b><span>关键指令多路异构复核，防注入与越权。</span></div>
+      <div class="op rv" style="--d:1"><b>政务决策支持</b><span>政策问答与文书生成的裁决留痕。</span></div>
+      <div class="op rv" style="--d:2"><b>不可逆操作防护</b><span>删除、发布、转账类动作前置复选。</span></div>
+      <div class="op rv" style="--d:3"><b>多智能体协同</b><span>拟态智能体组：群内异构 + 行为裁决。</span></div>
+      <div class="op rv" style="--d:4"><b>关键基础设施 Agent</b><span>工控与运维智能体的安全推理。</span></div>
+      <div class="op rv" style="--d:5"><b>高可用安全推理</b><span>单点被攻破不影响整体判决。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <p class="eyebrow rv">RESEARCH · 研究锚点</p>
+      <h2 class="h2 rv" style="--d:1">从网络空间到行为层，一条完整脉络</h2>
+    </div>
+    <blockquote class="quote rv">「不追求消除所有漏洞，而是通过改变系统的构造，使安全能力成为系统与生俱来的属性——内生安全。」<span class="who">—— 《网络空间拟态防御研究》(2016)</span></blockquote>
+    <p class="rv" style="font-size:13.5px;color:var(--faint)">参考文献：邬江兴《网络空间内生安全——拟态防御与广义鲁棒控制》(2020)；Cyberspace Endogenous Safety and Security (Engineering, 2022)；拟态构造工业互联网设备抵御 95 万次攻击（人民网 2020）；Knight &amp; Leveson (IEEE TSE 1986)；AAAI-26《Rethinking the Reliability of Multi-agent Systems: A Perspective from BFT》；《基于深度学习的拟态裁决方法研究》(通信学报 2024)。</p>
+    <div class="other-products rv" style="--d:1">
+      <a class="op" href="matrix-1.html"><b>智察 · 内生观测 →</b><span>看见内心，才能裁决行为</span></a>
+      <a class="op" href="matrix-2.html"><b>谛听 · 心声监测 →</b><span>听见模型开口之前的心声</span></a>
+      <a class="op" href="matrix-4.html"><b>进化 · RSI 守望 →</b><span>为自进化 AI 留下可审计的家谱</span></a>
+    </div>
+  </div>
+</section>
+
+<div data-shell="footer"></div>
+<div class="toast" id="toast"></div>
+<script src="assets/js/results.js"></script>
+<script src="assets/js/shell.js"></script>
+<script src="assets/js/core.js"></script>
+</body>
+</html>

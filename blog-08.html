@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语义异构度：LLM 时代的"相对正确公理" | 心镜 MindMirror 知识库</title>
+<meta name="description" content="异构若不定义清楚，冗余只是把同一个错误多写几遍。">
+<meta name="theme-color" content="#f4f7f7">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<div data-shell="nav"></div>
+<div class="post-head"><div class="container"><div class="kb-meta"><span>2026-10-28</span><span class="tag">理论</span></div><h1>语义异构度：LLM 时代的"相对正确公理"</h1></div></div><div class="container"><article class="post"><div class="post-body"><h2>引子：三个一模一样的答案</h2>
+<p>冗余给人的直觉是安全：同一件事多找几个人做，总不会所有人都错。工程史给这个直觉泼过一盆冷水。N 版本程序设计（NVP）让不同团队独立开发冗余程序，Knight 与 Leveson 在 1986 年的经典论文里指出：独立开发的程序仍然会犯相同的错误，因为错误的根源——需求误解、设计惯例、认知偏差——是共享的。动态异构冗余（DHR）的理论根基"相对正确公理"正是对这一批评的正面回应：只有当异构执行体的共同失效概率远低于单体时，冗余才买回安全。</p>
+<p>也就是说，<strong>冗余的价值完全取决于异构的质量</strong>。异构若不定义清楚，冗余只是把同一个错误多写几遍。这一课在确定性软件的世界里花了几十年才被写进教科书；在大模型的世界里，它将以更快的速度、更大的代价重演一遍。</p>
+<h2>大模型让共同失效从可能变成常态</h2>
+<p>大模型让 Knight 与 Leveson 的批评以更强的形式重现。主流模型的预训练语料高度重叠，架构设计趋同，对齐流程共享同一批人类偏好数据，工具生态更是一模一样。同源模型共享的不只是"相似的能力"，而是"相似的盲区"。提示注入、谄媚、幻觉在各大模型上普遍复现，这被很多人当作"模型都这样"的常识，但我们看到的是另一个事实：<strong>这是同构冗余的共同失效，是"多数一致"不可信的现场证据</strong>。</p>
+<p>共同失效的机制如今有了系统化的实证。从众攻击可以诱导同源模型群体一致犯错；Science Advances 2026 年的研究显示，恶意智能体群体可以借"多数跟随"制造虚假共识；AAAI-26 的论文证明简单多数表决在恶意比例超过三分之一时失效。多数一致不再天然意味着正确——在同源群体里，它可能恰恰是共谋的信号，而不是安全的证据。</p>
+<p>我们自己的实测给出了最直接的一条：在同一组提示注入攻击下，单模型注入成功率 80%，同构 3 表决<strong>同为 80%</strong>。同一个漏洞击穿全部同构副本，冗余的增益是零。这不是相对正确公理失效，而是它的前提被违反——执行体根本不是异构的。前提不成立，结论自然不成立。所以问题回到源头：<strong>什么才算异构？</strong>这个问题回答不了，所有关于冗余安全的讨论都是空转。</p>
+<h2>语义异构度：把"不一样"变成可度量</h2>
+<p>我们的回答是把<strong>语义异构度</strong>提升为一等概念。它不是"用了几个不同模型"的计数，而是执行体之间认知差异的可量化度量。三个度量视角：</p>
+<ul>
+<li><strong>特征空间距离</strong>——执行体内部表示与行为轨迹嵌入的差异，回答"它们的思考空间有多远"；</li>
+<li><strong>行为分布散度</strong>——同一输入下动作分布的偏离程度，回答"同样的问题，它们会不会做出不同的动作"；</li>
+<li><strong>错误模式相关性</strong>——两个执行体在哪些探针上一起失败，回答"它们犯错的原因是否独立"。</li>
+<p>三者合起来回答一个问题：这两个执行体犯错的原因是否独立。这才是冗余安全的全部基础。</p>
+</ul>
+<blockquote>两个同源模型的三票，不是三道防线，是一个错误的三份拷贝。</blockquote>
+<p>度量的目标是建立"异构度—共同失效率"的对抗性标定曲线，并给出可学习的判据：嵌入距离大于阈值时，共同失效率低于某个上界。这里必须诚实：如果同一代模型存在异构度上界——对齐收敛把"最强"与"最像"绑在一起——那么行为层 DHR 就有适用边界。负结果同样是科学结论，它恰恰是"按需冗余"设计的理论依据：哪些决策点值得冗余，哪些冗余注定无效，都要由标定曲线回答，而不是由直觉回答。</p>
+<h2>主动构造：异构不是等来的</h2>
+<p>测量之外，异构必须被<strong>主动构造</strong>。同一家族的模型即使名称不同，语义空间也高度重叠；排行榜选出的三强，很可能在盲区上同源。我们的构造配方有五个维度：<strong>模型族混合</strong>——跨家族选型，而不是同家族换尺寸；<strong>提示策略差异化</strong>——不同的角色设定、推理模板与决策格式；<strong>记忆切片</strong>——执行体之间记忆隔离，防止共享上下文抹平差异；<strong>工具实现多样化</strong>——同一能力的不同实现路径；<strong>采样策略多样化</strong>——温度与解码参数的分化。五维构造的共同目标，是让执行体的失效原因尽可能互相独立，而不是让它们的输出看起来不同。</p>
+<p>这里还有一个被普遍忽视的问题：黑盒模型的隐式同源无法直接观测。API 只给出文本，不给内部状态，异构度无从度量，你只能假设它存在。这正是我们坚持白盒观测的原因——内部状态探针在部署之前测量异构度，而不是部署之后祈祷异构存在。异构度度量是选型动作的前置条件，也是裁决权重分配的依据：异构度高的执行体在裁决中理应获得更高的独立性权重，而这个权重不应该由厂商宣传决定。</p>
+<h2>剂量-响应：安全增益是异构度的函数</h2>
+<p>我们的实测给出一条控制变量最干净的证据。三层裁决协议完全相同，唯一改变的是执行体构成：单模型注入成功率 80%；同构 3 表决 80%，冗余增益为零；异构 3 路加分层裁决，攻击交付率 <strong>0%</strong>——66.7% 的场景三路全部违规被直接阻断，良性任务误报 0%。同一套裁决，异构度不同，收益从 0 跳到 100%。</p>
+<blockquote>相对正确公理在 LLM 时代的重述：安全增益是语义异构度的函数，而不是模型数量的函数。</blockquote>
+<p>这条结论的反面同样重要：如果有人在没有度量异构度的情况下宣称"N 路表决安全"，他买到的可能只是 80% 的原地踏步，外加三倍的推理账单。同构冗余无增益不是我们的失败，而是异构必要性的证明。它被写进我们的产品文档，作为每一次选型决策的第一原则——因为把一个错误的三份拷贝当作三道防线，是当前多智能体行业最贵也最流行的错觉。</p>
+<h2>心镜视角：由度量驱动选型，而非排行榜</h2>
+<p>心镜的模型选型、组合策略与裁决权重，都由语义异构度这一度量驱动，而不是由排行榜驱动。排行榜度量的是"谁最强"，异构度度量的是"谁和谁不同"——在安全语境下，后者才是正确的优化目标。当行业还在用三个最强模型拼一个"更聪明"的多智能体时，我们选择用异构度标定过的模型组合拼一个"更难共同失效"的裁决群体。</p>
+<p>这是两种产品哲学的分野：一种是能力堆叠，一种是构造免疫。能力堆叠的上限是最好模型的上限；构造免疫的下限，是可度量、可承诺的安全增益。</p>
+<h2>展望：从度量到行业基线</h2>
+<ul>
+<li><strong>公开标定曲线</strong>。把"异构度—共同失效率"的标定曲线做成公开评测基线，让"异构冗余"从营销用语变成可检验的工程参数。任何一个团队都可以拿自己的模型组合来测，共同失效概率一测便知。</li>
+<li><strong>机理证明的起点</strong>。邬江兴在 CRESS 2025 提出"如何从机理上证明 AI 安全"。行为层机理证明的第一块砖，就是给"异构"一个可度量、可标定的定义。没有异构度，就没有相对正确公理，也就没有可承诺的安全增益——机理证明不能建立在"大概是异构的"之上。</li>
+<li><strong>政策与产业共振</strong>。《智能体实施意见》第八条要求"提升内生安全能力"，智能网联汽车内生安全白皮书与紫金山实验室三层免疫架构（应对 93%/24 小时攻击变异率）都在推动同一件事：安全从"事后救火"转向"构造承诺"。构造承诺的前提是可度量，语义异构度就是那个度量。</li>
+</ul>
+<h2>参考来源</h2>
+<ul>
+<li>[1] Knight J.C., Leveson N.G. An experimental evaluation of the assumption of independence in multiversion programming. IEEE TSE, 1986，https://ieeexplore.ieee.org/document/6312914</li>
+<li>[2] Avizienis A. The N-version approach to fault-tolerant software. IEEE TSE, 1985，https://dlnext.acm.org/doi/10.1109/TSE.1985.231893</li>
+<li>[3] Kuncheva L.I., Whitaker C.J. Measures of diversity in classifier ensembles. Machine Learning, 2003，https://link.springer.com/article/10.1023/A:1022859003006</li>
+<li>[4] 邬江兴. Cyberspace Endogenous Safety and Security. Engineering, 2022，https://www.cnki.com.cn/Article/CJFDTotal-GOCH202208022.htm</li>
+<li>[5] Wang J. et al. Mixture-of-Agents, arXiv:2406.04692，https://arxiv.org/abs/2406.04692</li>
+<li>[6] Rethinking the Reliability of Multi-agent Systems: A Perspective from BFT. AAAI-26，https://dl.acm.org/doi/10.1609/aaai.v40i41.40806</li>
+</ul></div><div class="post-footer"><a href="knowledge.html">← 返回知识库</a><span>心镜 MindMirror · 产品知识库</span></div></article></div>
+<div data-shell="footer"></div>
+<div class="toast" id="toast"></div>
+<script src="assets/js/results.js"></script>
+<script src="assets/js/shell.js"></script>
+<script src="assets/js/core.js"></script>
+</body>
+</html>
